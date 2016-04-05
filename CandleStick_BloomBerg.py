@@ -76,8 +76,14 @@ def roundTime(dt, roundTo):
     rounding = (seconds+roundTo/2) // roundTo * roundTo
     return dt + timedelta(0, rounding-seconds, -dt.microsecond)
 
-
 def readData(filename):
+    # filename = 'M:\Tanya\charts input.xlsx'
+    # filename = 'M:\chartData\charts input - Copy.xlsx'
+    # filename = 'M:\chartData\charts input.xlsx'
+    # filename = 'M:\chartData\Book1.xlsx'
+    # filename = 'M:\chartData\charts10min.xlsx'
+    # filename = 'M:\chartData\charts30min.xlsx'
+    # filename = 'M:\chartData\charts1hour.xlsx'
     cleanTheData()
     global timeInterval
     try:
@@ -85,7 +91,6 @@ def readData(filename):
         sheet1 = wb['Sheet1']
         sheet2 = wb['Sheet2']
         timeInterval = timedelta(seconds=sheet2.rows[0][1].value)
-        print 'time interval is %d' %(timeInterval.seconds / 60)
     except ValueError:
         print "Value error, please check the data"
         sys.exit()
@@ -175,7 +180,7 @@ def readData(filename):
             else:
                 extension1_xDate[i] = extension1_xDate[i - 1] + timedelta(minutes=1)
 
-    if timeInterval == timedelta(minutes=5) or timeInterval == timedelta(minutes=15) or timeInterval == timedelta(minutes=10) or timeInterval == timedelta(minutes=30):
+    if timeInterval == timedelta(minutes=10) or timeInterval == timedelta(minutes=30):
         for i in range(0, len(extension2_xDate)):
             if extension2High_yData[i]:
                 extension2_xDate[i] = transFromOriginDateToXaxisData(extension2_xDate[i])
@@ -208,7 +213,6 @@ def addLineExtension(figure, xData, yData, name, dashStyle, color):
 
     figure['data'].extend([extension])
 
-
 def addDotExtension(figure, xData, yData, name, color, symbol):
     extension = go.Scatter(
         x=xData,
@@ -226,7 +230,6 @@ def addDotExtension(figure, xData, yData, name, color, symbol):
 
 def createFigure():
     # fig = FF.create_candlestick(open_data, high_data, low_data, close_data, dates=datetime_data)
-    print 'Start Drawing %d minute candlesticks' % (timeInterval.seconds / 60)
 
     # ------------Custom Candlestick Colors------------
     # Make increasing ohlc sticks and customize their color and name
@@ -234,6 +237,7 @@ def createFigure():
         direction='increasing',
         marker=go.Marker(color='rgb(61, 153, 112)'),
         line=go.Line(color='rgb(61, 153, 112)'))
+
 
     # Make decreasing ohlc sticks and customize their color and name
     fig_decreasing = FigureFactory.create_candlestick(open_data, high_data, low_data, close_data, dates=datetime_xAxis,
@@ -246,7 +250,7 @@ def createFigure():
     fig['data'].extend(fig_decreasing['data'])
 
     # ------------Add extensions------------
-    if timeInterval == timedelta(minutes=5) or timeInterval == timedelta(minutes=15) or timeInterval == timedelta(minutes=10) or timeInterval == timedelta(minutes=30):
+    if timeInterval == timedelta(minutes=10) or timeInterval == timedelta(minutes=30):
         addLineExtension(fig, extension1_xDate, extension1High_yData, '1 hour high extension', 'dash', 'green')
         addLineExtension(fig, extension1_xDate, extension1Low_yData, '1 hour low extension', 'dash', 'red')
         addLineExtension(fig, extension2_xDate, extension2High_yData, '1 day high extension', 'dot', 'orange')
@@ -259,7 +263,14 @@ def createFigure():
         addLineExtension(fig, extension1_xDate, extension1Low_yData, '1 day low extension', 'dash', 'red')
 
     # ------------Update layout And Draw the chart------------
-    filename = '%d Min Candlesticks' % (timeInterval.seconds / 60)
+    filename = ''
+    if timeInterval == timedelta(minutes=10):
+        filename = '10 Min Candlesticks'
+    elif timeInterval == timedelta(minutes=30):
+        filename = '30 Min Candlesticks'
+    elif timeInterval == timedelta(minutes=60):
+        filename = '60 Min Candlesticks'
+
     fig['layout'].update(
         title=filename,
         xaxis=dict(
@@ -272,23 +283,118 @@ def createFigure():
     )
 
     # plotly.offline.plot(fig)
+
     plotly.plotly.plot(fig, filename=filename, sharing='public')
     # py.image.save_as(fig,'data.png')
-    print "----------The chart has been generated----------\n"
+    print "The chart has been generated"
+    # py.iplot(fig, filename='finance/aapl-candlestick-lxy', validate=False)
+
+    '''
+    # ------------Adding some dots to a Candlestick Chart------------
+    add_hhx = Scatter(
+        x = datetime_xAxis,
+        y = hhx_data,
+        name = '1 hour high extension',
+        mode = 'markers',
+        marker = Marker(
+            color = 'orange',
+            symbol = 'square'
+        )
+    )
+
+    add_hlx = Scatter(
+        x = datetime_xAxis,
+        y = hlx_data,
+        name = '1 hour low extension',
+        mode = 'markers',
+        marker = Marker(
+            color = 'blue',
+            symbol = 'square'
+        )
+    )
+
+    #fig['data'].extend([add_hhx])
+    #fig['data'].extend([add_hlx])
+
+    # ------------Define the name of extension--------------
+    name1, name2, name3, name4 = '', '', '', ''
+    if timeInterval == timedelta(minutes=10) or timeInterval == timedelta(minutes=30):
+        # 10 minutes
+        name1 = '1 hour high extension'
+        name2 = '1 hour low extension'
+        name3 = '1 day high extension'
+        name4 = '1 day low extension'
+    elif timeInterval == timedelta(minutes=60):
+        name1 = '1 day high extension'
+        name2 = '1 day low extension'
+        name3 = ''
+        name4 = ''
+
+    # ------------Adding the extension1 to the Candlestick Chart------------
+    add_extension1High = Scatter(
+        x = extension1_xDate,
+        y = extension1High_yData,
+        mode = 'lines',
+        name = name1,
+        line = dict(
+            dash = 'dash'
+        )
+    )
+
+    add_extension1Low = Scatter(
+        x = extension1_xDate,
+        y = extension1Low_yData,
+        mode = 'lines',
+        name = name2,
+        line = dict(
+            dash = 'dash'
+        )
+    )
+
+    #fig['data'].extend([add_extension1High])
+    #fig['data'].extend([add_extension1Low])
+
+    # ------------Adding the extension2 to the Candlestick Chart------------
+    if len(extension2_xDate):
+        add_extension2High = Scatter(
+            x = extension2_xDate,
+            y = extension2High_yData,
+            mode = 'lines',
+            name = name3,
+            line = dict(
+                dash = 'dot'
+            )
+        )
+
+        add_extension2Low = Scatter(
+            x = extension2_xDate,
+            y = extension2Low_yData,
+            mode = 'lines',
+            name = name4,
+            line = dict(
+                dash = 'dot'
+            )
+        )
+
+        #fig['data'].extend([add_extension2High])
+        #fig['data'].extend([add_extension2Low])
+    '''
+
 
 def main():
-    # filenames = ['M:\chartData\charts10min.xlsx', 'M:\chartData\charts30min.xlsx', 'M:\chartData\charts1hour.xlsx']
-    # filenames = ['M:\chartData\charts15min.xlsx']
-    filenames = ['M:\chartData\charts5min.xlsx', 'M:\chartData\charts10min.xlsx', 'M:\chartData\charts15min.xlsx', 'M:\chartData\charts30min.xlsx', 'M:\chartData\charts1hour.xlsx']
+    # Read data
+    print 'start read data'
+    filenames = ['M:\Chester.Luo\chartData\charts10min.xlsx', 'M:\Chester.Luo\chartData\charts30min.xlsx', 'M:\Chester.Luo\chartData\charts1hour.xlsx']
+    # filename = 'M:\chartData\charts10min.xlsx'
     for filename in filenames:
         # filename = ''
-        print '----------start read data----------'
         readData(filename)
         createFigure()
 
 
+
 if __name__ == "__main__":
-    print "****** Candle Stick Generator ******"
+    print "***** Candle Stick Generator *****"
     # try:
     main()
     # except:
