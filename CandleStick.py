@@ -253,8 +253,8 @@ def createFigure():
         addLineExtension(fig, extension2_xDate, extension2Low_yData, '1 day low extension', 'dot', 'blue')
 
     elif timeInterval == timedelta(minutes=60):
-        addDotExtension(fig, datetime_xAxis, hhx_data, '1 hour high extension', 'orange', 'square')
-        addDotExtension(fig, datetime_xAxis, hlx_data, '1 hour low extension', 'blue', 'square')
+        addDotExtension(fig, datetime_xAxis, hhx_data, '1 hour high extension', 'green', 'triangle-down')
+        addDotExtension(fig, datetime_xAxis, hlx_data, '1 hour low extension', 'red', 'triangle-up')
         addLineExtension(fig, extension1_xDate, extension1High_yData, '1 day high extension', 'dash', 'green')
         addLineExtension(fig, extension1_xDate, extension1Low_yData, '1 day low extension', 'dash', 'red')
 
@@ -271,15 +271,16 @@ def createFigure():
         )
     )
 
-    # plotly.offline.plot(fig)
-    plotly.plotly.plot(fig, filename=filename, sharing='public')
+    plotly.offline.plot(fig, filename=filename + '.html')
+    # plotly.plotly.plot(fig, filename=filename, sharing='public')
     # py.image.save_as(fig,'data.png')
     print "----------The chart has been generated----------\n"
 
+
 def main():
     # filenames = ['M:\chartData\charts10min.xlsx', 'M:\chartData\charts30min.xlsx', 'M:\chartData\charts1hour.xlsx']
-    # filenames = ['M:\chartData\charts15min.xlsx']
-    filenames = ['M:\chartData\charts5min.xlsx', 'M:\chartData\charts10min.xlsx', 'M:\chartData\charts15min.xlsx', 'M:\chartData\charts30min.xlsx', 'M:\chartData\charts1hour.xlsx']
+    filenames = ['M:\chartData\charts1hour.xlsx']
+    # filenames = ['M:\chartData\charts5min.xlsx', 'M:\chartData\charts10min.xlsx', 'M:\chartData\charts15min.xlsx', 'M:\chartData\charts30min.xlsx', 'M:\chartData\charts1hour.xlsx']
     for filename in filenames:
         # filename = ''
         print '----------start read data----------'
