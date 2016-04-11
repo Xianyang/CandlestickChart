@@ -77,7 +77,7 @@ def roundTime(dt, roundTo):
     return dt + timedelta(0, rounding-seconds, -dt.microsecond)
 
 
-def readData(filename):
+def readData(filename, isLastPartData, days = 0):
     cleanTheData()
     global timeInterval
     try:
@@ -92,7 +92,25 @@ def readData(filename):
     except Exception:
         sys.exit()
 
-    for row in sheet1.rows:
+    rowsToShow = []
+    if isLastPartData:
+        # for timeinterval 5 mins and 15 mins
+        indexToCheck = 0
+        if timeInterval == timedelta(minutes=5) or timeInterval == timedelta(minutes=15):
+            indexToCheck = 10
+        elif timeInterval == timedelta(minutes=60):
+            indexToCheck = 7
+        temp = (list)(sheet1.rows)
+        count = days
+        while count and len(temp):
+            row = temp.pop()
+            rowsToShow.insert(0, row)
+            if row[indexToCheck].value:
+                count -= 1
+    else:
+        rowsToShow = sheet1.rows
+
+    for row in rowsToShow:
         # Step1 ------ save the candlestick data to list
         if 'date' in str(row[0].value) or row[0].value is None:
             continue
@@ -224,7 +242,7 @@ def addDotExtension(figure, xData, yData, name, color, symbol):
     figure['data'].extend([extension])
 
 
-def createFigure():
+def createFigure(isLastPartData, days = 0):
     # fig = FF.create_candlestick(open_data, high_data, low_data, close_data, dates=datetime_data)
     print 'Start Drawing %d minute candlesticks' % (timeInterval.seconds / 60)
 
@@ -258,8 +276,24 @@ def createFigure():
         addLineExtension(fig, extension1_xDate, extension1High_yData, '1 day high extension', 'dash', 'green')
         addLineExtension(fig, extension1_xDate, extension1Low_yData, '1 day low extension', 'dash', 'red')
 
+    # ------------Add Annotations------------
+    annotations = []
+    annotations.append(dict(xref='paper', yref='paper', x=0, y=-0.05,
+                              xanchor='left', yanchor='bottom',
+                              text='Apr 1',
+                              font=dict(family='Arial',
+                                        size=12,
+                                        color='rgb(150,150,150)'),
+                              showarrow=False,))
+
+    layout = fig['layout']
+    # layout['annotations'] = annotations
+
     # ------------Update layout And Draw the chart------------
-    filename = '%d Min Candlesticks' % (timeInterval.seconds / 60)
+    if isLastPartData:
+        filename = '%d Min Candlesticks' % (timeInterval.seconds / 60) + ('(%d days)' % (days))
+    else:
+        filename = '%d Min Candlesticks' % (timeInterval.seconds / 60)
     fig['layout'].update(
         title=filename,
         xaxis=dict(
@@ -268,7 +302,7 @@ def createFigure():
             showticklabels=False,
             showgrid=True,
             showline=True
-        )
+        ),
     )
 
     plotly.offline.plot(fig, filename=filename + '.html')
@@ -279,13 +313,19 @@ def createFigure():
 
 def main():
     # filenames = ['M:\chartData\charts10min.xlsx', 'M:\chartData\charts30min.xlsx', 'M:\chartData\charts1hour.xlsx']
-    filenames = ['M:\chartData\charts1hour.xlsx']
+    # filenames = ['M:\chartData\charts1hour.xlsx']
     # filenames = ['M:\chartData\charts5min.xlsx', 'M:\chartData\charts10min.xlsx', 'M:\chartData\charts15min.xlsx', 'M:\chartData\charts30min.xlsx', 'M:\chartData\charts1hour.xlsx']
+    filenames = ['M:\chartData\charts5min.xlsx', 'M:\chartData\charts15min.xlsx', 'M:\chartData\charts1hour.xlsx']
     for filename in filenames:
         # filename = ''
         print '----------start read data----------'
-        readData(filename)
-        createFigure()
+        readData(filename, False)
+        createFigure(False)
+
+        lastdays = 5
+        readData(filename, True, 5)
+        createFigure(True, 5)
+
 
 
 if __name__ == "__main__":
