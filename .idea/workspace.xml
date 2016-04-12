@@ -2,10 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb64fa0b-8d23-4ca8-8cf4-a59ecdc93c56" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/15 Min Candlesticks.html" afterPath="$PROJECT_DIR$/15 Min Candlesticks.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/5 Min Candlesticks.html" afterPath="$PROJECT_DIR$/5 Min Candlesticks.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/60 Min Candlesticks.html" afterPath="$PROJECT_DIR$/60 Min Candlesticks.html" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/10 Min Candlesticks.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/15 Min Candlesticks(5 days).html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/15 Min Candlesticks.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/30 Min Candlesticks.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/5 Min Candlesticks(5 days).html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/5 Min Candlesticks.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/60 Min Candlesticks(10 days).html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/60 Min Candlesticks(5 days).html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/60 Min Candlesticks.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/temp-plot.html" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/testLabel.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CandleStick.py" afterPath="$PROJECT_DIR$/CandleStick.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CandleStick_BloomBerg.py" afterPath="$PROJECT_DIR$/CandleStick_BloomBerg.py" />
     </list>
     <ignored path="untitled.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,47 +46,13 @@
       <file leaf-file-name="CandleStick.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CandleStick.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.541272">
-              <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.691475">
+              <caret line="307" column="42" selection-start-line="307" selection-start-column="42" selection-end-line="307" selection-end-column="42" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-                <element signature="e#1273#2046#0" expanded="false" />
-                <element signature="e#2081#2616#0" expanded="false" />
+                <element signature="e#1283#2056#0" expanded="false" />
+                <element signature="e#2091#2626#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="testplot.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testplot.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="testLabel.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/testLabel.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="103" column="34" selection-start-line="103" selection-start-column="34" selection-end-line="103" selection-end-column="34" />
-              <folding>
-                <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="60 Min Candlesticks.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/60 Min Candlesticks.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -106,6 +82,7 @@
         <option value="$PROJECT_DIR$/Hiho1051.py" />
         <option value="$PROJECT_DIR$/Hiho1082.py" />
         <option value="$PROJECT_DIR$/testLabel.py" />
+        <option value="$PROJECT_DIR$/CandleStick_BloomBerg.py" />
         <option value="$PROJECT_DIR$/CandleStick.py" />
       </list>
     </option>
@@ -473,16 +450,26 @@
       <configuration name="Unittests in untitled" configurationId="tests" />
     </history-entry>
   </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.103125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985657" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25814864" sideWeight="0.46875" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985657" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36766624" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24771838" sideWeight="0.4975" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3481095" sideWeight="0.4975" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23087248" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -492,7 +479,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985657" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -532,7 +518,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="188" />
+      <option name="time" value="190" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
@@ -548,8 +534,8 @@
           <caret line="391" column="8" selection-start-line="391" selection-start-column="8" selection-end-line="391" selection-end-column="8" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1273#2046#0" expanded="false" />
-            <element signature="e#2081#2616#0" expanded="false" />
+            <element signature="e#1283#2056#0" expanded="false" />
+            <element signature="e#2091#2626#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -560,17 +546,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1273#2046#0" expanded="false" />
-            <element signature="e#2081#2616#0" expanded="false" />
+            <element signature="e#1283#2056#0" expanded="false" />
+            <element signature="e#2091#2626#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CandleStick_BloomBerg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28552097">
-          <caret line="281" column="51" selection-start-line="281" selection-start-column="51" selection-end-line="281" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -582,30 +560,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/60 Min Candlesticks.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/testplot.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="17" column="24" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
           <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/testLabel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="103" column="34" selection-start-line="103" selection-start-column="34" selection-end-line="103" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -626,14 +586,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CandleStick.py">
+    <entry file="file://$PROJECT_DIR$/updateFilesToServer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.541272">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.14571948">
+          <caret line="5" column="14" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#20#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CandleStick_BloomBerg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9350474">
+          <caret line="330" column="4" selection-start-line="330" selection-start-column="4" selection-end-line="330" selection-end-column="4" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
-            <element signature="e#1273#2046#0" expanded="false" />
-            <element signature="e#2081#2616#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CandleStick.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.691475">
+          <caret line="307" column="42" selection-start-line="307" selection-start-column="42" selection-end-line="307" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#1283#2056#0" expanded="false" />
+            <element signature="e#2091#2626#0" expanded="false" />
           </folding>
         </state>
       </provider>

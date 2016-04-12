@@ -1,4 +1,5 @@
 import sys
+import os
 from openpyxl import load_workbook
 import plotly
 from plotly.tools import FigureFactory
@@ -77,7 +78,7 @@ def roundTime(dt, roundTo):
     return dt + timedelta(0, rounding-seconds, -dt.microsecond)
 
 
-def readData(filename):
+def readData(filename, isLastPartData = False, days = 0):
     cleanTheData()
     global timeInterval
     try:
@@ -89,10 +90,32 @@ def readData(filename):
     except ValueError:
         print "Value error, please check the data"
         sys.exit()
-    except Exception:
+    except IOError as exc:
+        print 'IOError: %s not found, please check file name' % filename
+        sys.exit()
+    except Exception as exc:
+        print 'unexpected error: ', exc.message
         sys.exit()
 
-    for row in sheet1.rows:
+    rowsToShow = []
+    if isLastPartData:
+        # for timeinterval 5 mins and 15 mins
+        indexToCheck = 0
+        if timeInterval == timedelta(minutes=5) or timeInterval == timedelta(minutes=15) or timeInterval == timedelta(minutes=10) or timeInterval == timedelta(minutes=30):
+            indexToCheck = 10
+        elif timeInterval == timedelta(minutes=60):
+            indexToCheck = 7
+        temp = (list)(sheet1.rows)
+        count = days
+        while count and len(temp):
+            row = temp.pop()
+            rowsToShow.insert(0, row)
+            if row[indexToCheck].value:
+                count -= 1
+    else:
+        rowsToShow = sheet1.rows
+
+    for row in rowsToShow:
         # Step1 ------ save the candlestick data to list
         if 'date' in str(row[0].value) or row[0].value is None:
             continue
@@ -132,14 +155,14 @@ def readData(filename):
     # Step3 ------ delete the big time interval
     addPointCount = 0
     indexToInsert = []
-    for i in range(0, len(datetime_data)):
+    for i in xrange(0, len(datetime_data)):
         if i > 0:
             timeGap = datetime_data[i] - datetime_data[i - 1]
             if timeGap > 1 * timeInterval + timedelta(minutes=1):
                 addPointCount += 1
                 indexToInsert.append(i)
 
-    for i in range(0, len(datetime_data) + addPointCount):
+    for i in xrange(0, len(datetime_data) + addPointCount):
         datetime_xAxis.append(datetime_data[0] + i * timeInterval)
 
     for i in indexToInsert:
@@ -163,7 +186,7 @@ def readData(filename):
     '''
 
     # Step5 ------ Process datetime for extensions
-    for i in range(0, len(extension1_xDate)):
+    for i in xrange(0, len(extension1_xDate)):
         if extension1High_yData[i] == 41.27 and extension1Low_yData[i] == 41.28:
             if extension1High_yData[i]:
                 extension1_xDate[i] = transFromOriginDateToXaxisData(extension1_xDate[i])
@@ -176,7 +199,7 @@ def readData(filename):
                 extension1_xDate[i] = extension1_xDate[i - 1] + timedelta(minutes=1)
 
     if timeInterval == timedelta(minutes=5) or timeInterval == timedelta(minutes=15) or timeInterval == timedelta(minutes=10) or timeInterval == timedelta(minutes=30):
-        for i in range(0, len(extension2_xDate)):
+        for i in xrange(0, len(extension2_xDate)):
             if extension2High_yData[i]:
                 extension2_xDate[i] = transFromOriginDateToXaxisData(extension2_xDate[i])
             else:
@@ -224,7 +247,7 @@ def addDotExtension(figure, xData, yData, name, color, symbol):
     figure['data'].extend([extension])
 
 
-def createFigure():
+def createFigure(isLastPartData = False, days = 0):
     # fig = FF.create_candlestick(open_data, high_data, low_data, close_data, dates=datetime_data)
     print 'Start Drawing %d minute candlesticks' % (timeInterval.seconds / 60)
 
@@ -253,13 +276,16 @@ def createFigure():
         addLineExtension(fig, extension2_xDate, extension2Low_yData, '1 day low extension', 'dot', 'blue')
 
     elif timeInterval == timedelta(minutes=60):
-        addDotExtension(fig, datetime_xAxis, hhx_data, '1 hour high extension', 'orange', 'square')
-        addDotExtension(fig, datetime_xAxis, hlx_data, '1 hour low extension', 'blue', 'square')
+        addDotExtension(fig, datetime_xAxis, hhx_data, '1 hour high extension', 'orange', 'triangle-down')
+        addDotExtension(fig, datetime_xAxis, hlx_data, '1 hour low extension', 'orange', 'triangle-up')
         addLineExtension(fig, extension1_xDate, extension1High_yData, '1 day high extension', 'dash', 'green')
         addLineExtension(fig, extension1_xDate, extension1Low_yData, '1 day low extension', 'dash', 'red')
 
     # ------------Update layout And Draw the chart------------
-    filename = '%d Min Candlesticks' % (timeInterval.seconds / 60)
+    if isLastPartData:
+        filename = '%dMin-Candlesticks(%ddays)' % (timeInterval.seconds / 60, days)
+    else:
+        filename = '%dMin-Candlesticks' % (timeInterval.seconds / 60)
     fig['layout'].update(
         title=filename,
         xaxis=dict(
@@ -268,24 +294,41 @@ def createFigure():
             showticklabels=False,
             showgrid=True,
             showline=True
-        )
+        ),
     )
 
-    # plotly.offline.plot(fig)
-    plotly.plotly.plot(fig, filename=filename, sharing='public')
+    plotly.offline.plot(fig, filename=filename + '.html')
+    # plotly.plotly.plot(fig, filename=filename, sharing='public')
     # py.image.save_as(fig,'data.png')
     print "----------The chart has been generated----------\n"
 
+def transferToServer():
+    print 'waiting........the files are transferring to server........'
+    os.system('candlestickTransferToServer.py')
 
 def main():
     # filenames = ['M:\chartData\charts10min.xlsx', 'M:\chartData\charts30min.xlsx', 'M:\chartData\charts1hour.xlsx']
-    # filenames = ['M:\chartData\charts15min.xlsx']
-    filenames = ['M:\Chester.Luo\chartData\charts5min.xlsx', 'M:\Chester.Luo\chartData\charts10min.xlsx', 'M:\Chester.Luo\chartData\charts15min.xlsx', 'M:\Chester.Luo\chartData\charts30min.xlsx', 'M:\Chester.Luo\chartData\charts1hour.xlsx']
+    # filenames = ['M:\chartData\charts1hour.xlsx']
+    # filenames = ['M:\chartData\charts5min.xlsx', 'M:\chartData\charts10min.xlsx', 'M:\chartData\charts15min.xlsx', 'M:\chartData\charts30min.xlsx', 'M:\chartData\charts1hour.xlsx']
+    # filenames = ['M:\chartData\charts5min.xlsx', 'M:\chartData\charts15min.xlsx', 'M:\chartData\charts1hour.xlsx']
+
+    filenames = ['M:\Chester.Luo\chartData\charts5min.xlsx']
+    nowtime = datetime.now()
+    if nowtime.minute in [0, 15, 30, 45]:
+        filenames.append('M:\Chester.Luo\chartData\charts15min.xlsx')
+    if nowtime.minute == 0:
+        filenames.append('M:\Chester.Luo\chartData\charts1hour.xlsx')
+
     for filename in filenames:
-        # filename = ''
         print '----------start read data----------'
         readData(filename)
         createFigure()
+
+        lastdays = 5
+        readData(filename, True, lastdays)
+        createFigure(True, lastdays)
+
+    transferToServer()
 
 
 if __name__ == "__main__":

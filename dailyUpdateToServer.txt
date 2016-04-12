@@ -1,0 +1,18 @@
+option batch abort
+option confirm off
+open sftp://root:Koi$$@10.28.38.22
+put M:\Dashboard_v2\Daily\data\COMMODITIES\* /srv/shiny-server/Dashboard/COMMODITIES/data/
+put M:\Dashboard_v2\Daily\data\EQUITY\* /srv/shiny-server/Dashboard/EQUITY/data/
+put M:\Dashboard_v2\Daily\data\CURNCY\* /srv/shiny-server/Dashboard/CURNCY/data/
+put M:\Dashboard_v2\Daily\data\METAL\* /srv/shiny-server/Dashboard/METAL/data/
+put M:\Dashboard_v2\Daily\data\Asia_INDEX\* /srv/shiny-server/Dashboard/Asia_INDEX/data/
+put M:\Dashboard_v2\Daily\data\Other_INDEX\* /srv/shiny-server/Dashboard/Other_INDEX/data/
+
+put M:\Dashboard_v2\Daily\chart\COMMODITIES\* /srv/shiny-server/Dashboard/COMMODITIES/chart/
+put M:\Dashboard_v2\Daily\chart\CURNCY\* /srv/shiny-server/Dashboard/CURNCY/chart/
+put M:\Dashboard_v2\Daily\chart\EQUITY\* /srv/shiny-server/Dashboard/EQUITY/chart/
+put M:\Dashboard_v2\Daily\chart\Asia_INDEX\* /srv/shiny-server/Dashboard/Asia_INDEX/chart/
+put M:\Dashboard_v2\Daily\chart\Other_INDEX\* /srv/shiny-server/Dashboard/Other_INDEX/chart/
+put M:\Dashboard_v2\Daily\chart\METAL\* /srv/shiny-server/Dashboard/METAL/chart/
+exit
+
