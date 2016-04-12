@@ -80,7 +80,7 @@ def roundTime(dt, roundTo):
 
 def readData(filename, isLastPartData = False, days = 0):
     cleanTheData()
-    global timeInterval
+    global timeInterval, datetime_xAxis
     try:
         wb = load_workbook(filename)
         sheet1 = wb['Sheet1']
@@ -99,15 +99,14 @@ def readData(filename, isLastPartData = False, days = 0):
 
     rowsToShow = []
     if isLastPartData:
-        # for timeinterval 5 mins and 15 mins
         indexToCheck = 0
-        if timeInterval == timedelta(minutes=5) or timeInterval == timedelta(minutes=15) or timeInterval == timedelta(minutes=10) or timeInterval == timedelta(minutes=30):
+        if timeInterval in [timedelta(minutes=5), timedelta(minutes=10), timedelta(minutes=15), timedelta(minutes=30)]:
             indexToCheck = 10
         elif timeInterval == timedelta(minutes=60):
             indexToCheck = 7
         temp = (list)(sheet1.rows)
         count = days
-        while count and len(temp):
+        while count and len(temp) > 0:
             row = temp.pop()
             rowsToShow.insert(0, row)
             if row[indexToCheck].value:
@@ -137,6 +136,7 @@ def readData(filename, isLastPartData = False, days = 0):
             extension1_xDate.append(roundTime(row[0].value, 60) + row[9].value * timeInterval)
             extension1High_yData.append(row[7].value)
             extension1Low_yData.append(row[8].value)
+            # this None data is used to add a gap
             extension1_xDate.append(roundTime(row[0].value, 60) + row[9].value * timeInterval + timedelta(minutes=1))
             extension1High_yData.append(None)
             extension1Low_yData.append(None)
@@ -148,22 +148,20 @@ def readData(filename, isLastPartData = False, days = 0):
             extension2_xDate.append(roundTime(row[0].value, 60) + row[12].value * timeInterval)
             extension2High_yData.append(row[10].value)
             extension2Low_yData.append(row[11].value)
+            # this None data is used to add a gap
             extension2_xDate.append(roundTime(row[0].value, 60) + row[12].value * timeInterval + timedelta(minutes=1))
             extension2High_yData.append(None)
             extension2Low_yData.append(None)
 
     # Step3 ------ delete the big time interval
-    addPointCount = 0
     indexToInsert = []
-    for i in xrange(0, len(datetime_data)):
-        if i > 0:
-            timeGap = datetime_data[i] - datetime_data[i - 1]
-            if timeGap > 1 * timeInterval + timedelta(minutes=1):
-                addPointCount += 1
-                indexToInsert.append(i)
+    for i in xrange(1, len(datetime_data)):
+        timeGap = datetime_data[i] - datetime_data[i - 1]
+        # this means that the gap is bigger than one time interval
+        if timeGap > 1 * timeInterval + timedelta(minutes=1):
+            indexToInsert.append(i)
 
-    for i in xrange(0, len(datetime_data) + addPointCount):
-        datetime_xAxis.append(datetime_data[0] + i * timeInterval)
+    datetime_xAxis = [datetime_data[0] + i * timeInterval for i in xrange(0, len(datetime_data) + len(indexToInsert))]
 
     for i in indexToInsert:
         high_data.insert(i + indexToInsert.index(i), None)
@@ -187,18 +185,12 @@ def readData(filename, isLastPartData = False, days = 0):
 
     # Step5 ------ Process datetime for extensions
     for i in xrange(0, len(extension1_xDate)):
-        if extension1High_yData[i] == 41.27 and extension1Low_yData[i] == 41.28:
-            if extension1High_yData[i]:
-                extension1_xDate[i] = transFromOriginDateToXaxisData(extension1_xDate[i])
-            else:
-                extension1_xDate[i] = extension1_xDate[i - 1] + timedelta(minutes=1)
+        if extension1High_yData[i]:
+            extension1_xDate[i] = transFromOriginDateToXaxisData(extension1_xDate[i])
         else:
-            if extension1High_yData[i]:
-                extension1_xDate[i] = transFromOriginDateToXaxisData(extension1_xDate[i])
-            else:
-                extension1_xDate[i] = extension1_xDate[i - 1] + timedelta(minutes=1)
+            extension1_xDate[i] = extension1_xDate[i - 1] + timedelta(minutes=1)
 
-    if timeInterval == timedelta(minutes=5) or timeInterval == timedelta(minutes=15) or timeInterval == timedelta(minutes=10) or timeInterval == timedelta(minutes=30):
+    if timeInterval in [timedelta(minutes=5), timedelta(minutes=10), timedelta(minutes=15), timedelta(minutes=30)]:
         for i in xrange(0, len(extension2_xDate)):
             if extension2High_yData[i]:
                 extension2_xDate[i] = transFromOriginDateToXaxisData(extension2_xDate[i])
@@ -213,7 +205,7 @@ def transFromOriginDateToXaxisData(dateTime):
         index = datetime_data.index(dateTime)
         return datetime_xAxis[index]
     else:
-        dateTime = dateTime - timeInterval
+        dateTime -= timeInterval
         return transFromOriginDateToXaxisData(dateTime)
 
 
@@ -224,15 +216,15 @@ def addLineExtension(figure, xData, yData, name, dashStyle, color):
         mode='lines',
         name=name,
         line=dict(
-            dash=dashStyle,
-            color=color
+            color=color,
+            dash=dashStyle
         )
     )
 
     figure['data'].extend([extension])
 
 
-def addDotExtension(figure, xData, yData, name, color, symbol):
+def addDotExtension(figure, xData, yData, name, symbol, color):
     extension = go.Scatter(
         x=xData,
         y=yData,
@@ -269,15 +261,15 @@ def createFigure(isLastPartData = False, days = 0):
     fig['data'].extend(fig_decreasing['data'])
 
     # ------------Add extensions------------
-    if timeInterval == timedelta(minutes=5) or timeInterval == timedelta(minutes=15) or timeInterval == timedelta(minutes=10) or timeInterval == timedelta(minutes=30):
+    if timeInterval in [timedelta(minutes=5), timedelta(minutes=10), timedelta(minutes=15), timedelta(minutes=30)]:
         addLineExtension(fig, extension1_xDate, extension1High_yData, '1 hour high extension', 'dash', 'green')
         addLineExtension(fig, extension1_xDate, extension1Low_yData, '1 hour low extension', 'dash', 'red')
         addLineExtension(fig, extension2_xDate, extension2High_yData, '1 day high extension', 'dot', 'orange')
         addLineExtension(fig, extension2_xDate, extension2Low_yData, '1 day low extension', 'dot', 'blue')
 
     elif timeInterval == timedelta(minutes=60):
-        addDotExtension(fig, datetime_xAxis, hhx_data, '1 hour high extension', 'orange', 'triangle-down')
-        addDotExtension(fig, datetime_xAxis, hlx_data, '1 hour low extension', 'orange', 'triangle-up')
+        addDotExtension(fig, datetime_xAxis, hhx_data, '1 hour high extension', 'triangle-down', 'orange')
+        addDotExtension(fig, datetime_xAxis, hlx_data, '1 hour low extension', 'triangle-up', 'orange')
         addLineExtension(fig, extension1_xDate, extension1High_yData, '1 day high extension', 'dash', 'green')
         addLineExtension(fig, extension1_xDate, extension1Low_yData, '1 day low extension', 'dash', 'red')
 

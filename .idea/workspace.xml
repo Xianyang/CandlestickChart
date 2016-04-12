@@ -2,20 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb64fa0b-8d23-4ca8-8cf4-a59ecdc93c56" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/10 Min Candlesticks.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/15 Min Candlesticks(5 days).html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/15 Min Candlesticks.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/30 Min Candlesticks.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/5 Min Candlesticks(5 days).html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/5 Min Candlesticks.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/60 Min Candlesticks(10 days).html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/60 Min Candlesticks(5 days).html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/60 Min Candlesticks.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/temp-plot.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/testLabel.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/15Min-Candlesticks(5days).html" afterPath="$PROJECT_DIR$/15Min-Candlesticks(5days).html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/15Min-Candlesticks.html" afterPath="$PROJECT_DIR$/15Min-Candlesticks.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/5Min-Candlesticks(5days).html" afterPath="$PROJECT_DIR$/5Min-Candlesticks(5days).html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/5Min-Candlesticks.html" afterPath="$PROJECT_DIR$/5Min-Candlesticks.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/60Min-Candlesticks(5days).html" afterPath="$PROJECT_DIR$/60Min-Candlesticks(5days).html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/60Min-Candlesticks.html" afterPath="$PROJECT_DIR$/60Min-Candlesticks.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CandleStick.py" afterPath="$PROJECT_DIR$/CandleStick.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CandleStick_BloomBerg.py" afterPath="$PROJECT_DIR$/CandleStick_BloomBerg.py" />
     </list>
     <ignored path="untitled.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,8 +40,8 @@
       <file leaf-file-name="CandleStick.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CandleStick.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.691475">
-              <caret line="307" column="42" selection-start-line="307" selection-start-column="42" selection-end-line="307" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.63671374">
+              <caret line="77" column="63" selection-start-line="77" selection-start-column="63" selection-end-line="77" selection-end-column="63" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#1283#2056#0" expanded="false" />
@@ -93,10 +87,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
+    <option name="x" value="1592" />
     <option name="y" value="-8" />
     <option name="width" value="1616" />
-    <option name="height" value="876" />
+    <option name="height" value="916" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -460,7 +454,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <frame x="1592" y="-8" width="1616" height="916" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15125" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -469,11 +463,11 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32985657" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36766624" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3481095" sideWeight="0.4975" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34696406" sideWeight="0.4975" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23087248" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34550196" sideWeight="0.53125" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283767" sideWeight="0.53125" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -518,12 +512,13 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="190" />
+      <option name="time" value="193" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="PythonConfigurationType">
         <watch expression="datetime_data" language="Python" />
         <watch expression="datetime_xAxis" language="Python" />
+        <watch expression="datetime_Axis" language="Python" />
       </configuration>
     </watches-manager>
   </component>
@@ -608,8 +603,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CandleStick.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.691475">
-          <caret line="307" column="42" selection-start-line="307" selection-start-column="42" selection-end-line="307" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.63671374">
+          <caret line="77" column="63" selection-start-line="77" selection-start-column="63" selection-end-line="77" selection-end-column="63" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#1283#2056#0" expanded="false" />
