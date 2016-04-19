@@ -297,7 +297,7 @@ def createFigure(isLastPartData = False, days = 0):
         ),
     )
 
-    plotly.offline.plot(fig, filename=filename + '.html')
+    plotly.offline.plot(fig, filename=filename + '.html', auto_open = False)
     # plotly.plotly.plot(fig, filename=filename, sharing='public')
     # py.image.save_as(fig,'data.png')
     print "----------The chart has been generated----------\n"
