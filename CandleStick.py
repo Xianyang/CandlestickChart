@@ -82,7 +82,7 @@ def readData(filename, isLastPartData = False, days = 0):
     except ValueError:
         print "Value error, please check the data"
         sys.exit()
-    except IOError:
+    except IOError as exc:
         print 'IOError: %s not found, please check file name' % filename
         sys.exit()
     except Exception as exc:
@@ -91,6 +91,7 @@ def readData(filename, isLastPartData = False, days = 0):
 
     rowsToShow = []
     if isLastPartData:
+        # for timeinterval 5 mins, 10 mins, 15 mins and 30 mins
         indexToCheck = 0
         if timeInterval in [timedelta(minutes=5), timedelta(minutes=10), timedelta(minutes=15), timedelta(minutes=30)]:
             indexToCheck = 10
@@ -202,7 +203,7 @@ def addDotExtension(figure, xData, yData, name, symbol, color):
     figure['data'].extend([extension])
 
 
-def createFigure(isLastPartData = False, days = 0):
+def createFigure(isLastPartData = False, days = 0, isBloomBergMachine = False):
     # fig = FF.create_candlestick(open_data, high_data, low_data, close_data, dates=datetime_data)
     print 'Start Drawing %d minute candlesticks' % (timeInterval.seconds / 60)
 
@@ -257,7 +258,7 @@ def createFigure(isLastPartData = False, days = 0):
         ),
     )
 
-    plotly.offline.plot(fig, filename=filename + '.html', auto_open=True)
+    plotly.offline.plot(fig, filename=filename + '.html', auto_open=not isBloomBergMachine)
     # plotly.plotly.plot(fig, filename=filename, sharing='public')
     # py.image.save_as(fig,'data.png')
     print "----------The chart has been generated----------\n"
@@ -269,20 +270,29 @@ def transferToServer():
 
 
 def main():
-    # filenames = ['M:\chartData\charts10min.xlsx', 'M:\chartData\charts30min.xlsx', 'M:\chartData\charts1hour.xlsx']
-    # filenames = ['M:\chartData\charts1hour.xlsx']
-    # filenames = ['M:\chartData\charts5min.xlsx', 'M:\chartData\charts10min.xlsx', 'M:\chartData\charts15min.xlsx', 'M:\chartData\charts30min.xlsx', 'M:\chartData\charts1hour.xlsx']
-    filenames = ['M:\chartData\charts5min.xlsx', 'M:\chartData\charts15min.xlsx', 'M:\chartData\charts1hour.xlsx']
+    isBloomBergMachine = False
+
+    if isBloomBergMachine:
+        filenames = ['M:\Chester.Luo\chartData\charts5min.xlsx']
+        nowtime = datetime.now()
+        if nowtime.minute in [0, 15, 30, 45]:
+            filenames.append('M:\Chester.Luo\chartData\charts15min.xlsx')
+        if nowtime.minute == 0:
+            filenames.append('M:\Chester.Luo\chartData\charts1hour.xlsx')
+    else:
+        filenames = ['M:\chartData\charts5min.xlsx', 'M:\chartData\charts15min.xlsx', 'M:\chartData\charts1hour.xlsx']
+
     for filename in filenames:
         print '----------start read data----------'
         readData(filename)
-        createFigure()
+        createFigure(isBloomBergMachine=isBloomBergMachine)
 
         lastdays = 5
         readData(filename, True, lastdays)
-        createFigure(True, lastdays)
+        createFigure(True, lastdays, isBloomBergMachine=isBloomBergMachine)
 
-    # transferToServer()
+    if isBloomBergMachine:
+        transferToServer()
 
 if __name__ == "__main__":
     print "****** Candle Stick Generator ******"
