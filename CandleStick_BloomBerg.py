@@ -239,8 +239,8 @@ def createFigure(isLastPartData = False, days = 0, isBloomBergMachine = False):
     elif timeInterval == timedelta(minutes=60):
         addDotExtension(fig, datetime_xAxis, [datarow.hhx for datarow in dataRows], '1 hour high extension', 'triangle-down', 'orange')
         addDotExtension(fig, datetime_xAxis, [datarow.hlx for datarow in dataRows], '1 hour low extension', 'triangle-up', 'orange')
-        addLineExtension(fig, [extension[0] for extension in extension1], [extension[1] for extension in extension1], '1 hour high extension', 'dash', 'green')
-        addLineExtension(fig, [extension[0] for extension in extension1], [extension[2] for extension in extension1], '1 hour low extension', 'dash', 'red')
+        addLineExtension(fig, [extension[0] for extension in extension1], [extension[1] for extension in extension1], '1 day high extension', 'dash', 'green')
+        addLineExtension(fig, [extension[0] for extension in extension1], [extension[2] for extension in extension1], '1 day low extension', 'dash', 'red')
 
     # ------------Update layout And Draw the chart------------
     if isLastPartData:
