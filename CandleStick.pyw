@@ -58,12 +58,12 @@ class DataRow:
     def __init__(self, row, indexOfRow):
         self.index = indexOfRow
         self.date = (roundTime(row[0].value, 60) if indexOfRow != -1 else None)
-        self.open = (row[1].value if indexOfRow != -1 else None)
-        self.high = (row[2].value if indexOfRow != -1 else None)
-        self.low = (row[3].value if indexOfRow != -1 else None)
-        self.close = (row[4].value if indexOfRow != -1 else None)
-        self.hhx = (row[5].value if indexOfRow != -1 else None)
-        self.hlx = (row[6].value if indexOfRow != -1 else None)
+        self.open = (row[1].value  if indexOfRow != -1 else None)
+        self.high = (row[2].value  if indexOfRow != -1 else None)
+        self.low = (row[3].value  if indexOfRow != -1 else None)
+        self.close = (row[4].value  if indexOfRow != -1 else None)
+        self.hhx = (row[5].value  if indexOfRow != -1 else None)
+        self.hlx = (row[6].value  if indexOfRow != -1 else None)
         self.extension1High = (row[7].value if indexOfRow != -1 and len(row) > 9 and row[7].value else None)
         self.extension1Low = (row[8].value if indexOfRow != -1 and len(row) > 9 and row[8].value else None)
         self.extension1LastFor = (row[9].value if indexOfRow != -1 and len(row) > 9 and row[9].value else None)
@@ -212,10 +212,7 @@ def addDotExtension(figure, xData, yData, name, symbol, color):
 
 def createFigure(lastDays = 0, isAutoOpen = True, machine = 'other'):
     # fig = FF.create_candlestick(open_data, high_data, low_data, close_data, dates=datetime_data)
-    if lastDays == 0:
-        print 'Start Drawing %d minute candlesticks' % (timeInterval.seconds / 60)
-    else:
-        print 'Start Drawing %d minute candlesticks(%d days)' % (timeInterval.seconds / 60, lastDays)
+    print 'Start Drawing %d minute candlesticks' % (timeInterval.seconds / 60)
 
     # ------------Custom Candlestick Colors------------
     # Make increasing ohlc sticks and customize their color and name
@@ -336,8 +333,8 @@ def runChart(timeInterval, lastDays, isAutoOpen, machine):
         elif timeInterval is 0:
             filesname = filesForBloomBerg.values()
         else:
-            raise Exception('Wrong time interval, please check -t')
-
+            raise Exception('Wrong time interval')
+            sys.exit()
     elif machine == 'other':
         if timeInterval is 5:
             filesname.append(filesForOthers['5min'])
@@ -348,10 +345,8 @@ def runChart(timeInterval, lastDays, isAutoOpen, machine):
         elif timeInterval is 0:
             filesname = filesForOthers.values()
         else:
-            raise Exception('Wrong time interval, please check -t')
-
-    if len(filesname) == 0:
-        raise Exception('No file is found')
+            raise Exception('Wrong time interval')
+            sys.exit()
 
     for filename in filesname:
         print '----------start read data----------'
@@ -364,19 +359,12 @@ def runChart(timeInterval, lastDays, isAutoOpen, machine):
             readData(filename, 5)
             createFigure(5, isAutoOpen, machine)
 
-        else:
-            readData(filename, lastDays)
-            createFigure(lastDays, isAutoOpen, machine)
-
     if machine == 'bloomberg': transferToServer()
 
 
 def main():
     args = readCommand(sys.argv[1:])
-    try:
-        runChart(**args)
-    except Exception as exc:
-        print exc
+    runChart(**args)
 
 
 if __name__ == "__main__":
