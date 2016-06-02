@@ -299,10 +299,10 @@ def readCommand( argv ):
     """
     parser = OptionParser(usageStr)
 
-    parser.add_option('-t', '--timeinterval', dest='timeInterval', type='int')
-    parser.add_option('-l', '--last', dest='lastDays', type='int')
-    parser.add_option('-o', '--open', dest='autoOpen', type='int')
-    parser.add_option('-m', '--machine', dest='machine', type='str')
+    parser.add_option('-t', '--timeinterval', dest='timeInterval', type='int', help='define which chart to show. If 0, generate all the charts')
+    parser.add_option('-l', '--last', dest='lastDays', type='int', help='define how many days to show. If 0, generate all the dates')
+    parser.add_option('-o', '--open', dest='autoOpen', type='int', help='define whether the charts should be opened. If 1, open the charts. If 0, not open')
+    parser.add_option('-m', '--machine', dest='machine', type='str', help='define which machine the code is running on')
 
     options, otherjunk = parser.parse_args(argv)
     if len(otherjunk) != 0:
