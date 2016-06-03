@@ -65,7 +65,7 @@ def roundTime(dt, roundTo):
 
     import types
     if type(dt) is types.StringType:
-        dt = datetime.strptime(dt, '%m/%d/%Y %H:%M')
+        dt = datetime.strptime(dt, '%Y-%m-%d %H:%M:%S')
 
     seconds = (dt - dt.min).seconds
     # // is a floor division, not a comment on following line:
@@ -110,6 +110,8 @@ def readData(filename):
         timeInterval = timedelta(minutes=int(rowsToShow[1][1]))
         daysToShow = int(rowsToShow[2][1])
         extensionCount = int(rowsToShow[3][1])
+        print 'chart titile is ' + chartTitle
+        print 'time interval is %d' % (timeInterval.seconds / 60)
         for i in range(0, extensionCount):
             extensionLists.append([])
             extensionNames.append(rowsToShow[parameterRowNumber-1][i+6].split('_')[0])
@@ -270,7 +272,7 @@ def createFigure(filename, isAutoOpen = True, isUploadToServer = False):
 def main():
     path = os.path.dirname(os.path.abspath(__file__))
 
-    filenames = [path+'\\'+f for f in listdir(path) if isfile(join(path, f)) and f.endswith('.csv')]
+    filenames = [path+'/'+f for f in listdir(path) if isfile(join(path, f)) and f.endswith('.csv')]
     for filename in filenames:
         isAutoOpen = True
         isUploadToServer = False
