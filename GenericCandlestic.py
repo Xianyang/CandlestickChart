@@ -15,6 +15,9 @@ dataRows = []               # data list for all data
 datetime_data = []          # datetime list for candlestick
 datetime_xAxis = []         # datetime list for showing on the xAxis
 extensionLists = []         # extension list
+extensionNames = []
+extensionColors = []
+extensionLineTypes = []
 chartTitle = ''             # title of this chart
 timeInterval = 0            # the minimum time interval
 daysToShow = 0              # how many days the user want to show
@@ -23,15 +26,31 @@ parameterRowNumber = 5      # how many parameter row
 
 
 def cleanTheData():
+    global dataRows
+    global datetime_data
+    global datetime_xAxis
     global extensionLists
+    global extensionNames
+    global extensionColors
+    global extensionLineTypes
     global chartTitle
     global timeInterval
     global daysToShow
+    global extensionCount
+    global parameterRowNumber
 
+    dataRows = []
+    datetime_data = []
+    datetime_xAxis = []
     extensionLists = []
+    extensionNames = []
+    extensionColors = []
+    extensionLineTypes = []
     chartTitle = ''
     timeInterval = 0
     daysToShow = 0
+    extensionCount = 0
+    parameterRowNumber = 5
 
 
 def roundTime(dt, roundTo):
@@ -93,6 +112,9 @@ def readData(filename):
         extensionCount = int(rowsToShow[3][1])
         for i in range(0, extensionCount):
             extensionLists.append([])
+            extensionNames.append(rowsToShow[parameterRowNumber-1][i+6].split('_')[0])
+            extensionColors.append(rowsToShow[parameterRowNumber-1][i+6].split('_')[1])
+            extensionLineTypes.append(rowsToShow[parameterRowNumber-1][i+6].split('_')[2])
         #print 'time interval is %d' %(timeInterval)
     except ValueError:
         print "Value error, please check the data"
@@ -152,9 +174,15 @@ def readData(filename):
 
     # Step5 ------ Process datetime for extensions
     for extensionList in extensionLists:
-        for i in xrange(0, len(extensionList):
+        for i in xrange(0, len(extensionList)):
+            if extensionList[i][1]:
+                extensionList[i][0] = transFromOriginDateToXaxisData(extensionList[i][0])
+                if i % 3 == 1 and extensionList[i][0] == extensionList[i - 1][0]:
+                    extensionList[i][0] += timeInterval
+            else:
+                extensionList[i][0] = extensionList[i - 1][0] + timedelta(seconds=1)
 
-
+    print "The data is prepared"
 
 def transFromOriginDateToXaxisData(dateTime):
     if dateTime in datetime_data:
@@ -196,8 +224,48 @@ def addDotExtension(figure, xData, yData, name, symbol, color):
 
 
 def createFigure(filename, isAutoOpen = True, isUploadToServer = False):
-    print 'a'
+    # ------------Custom Candlestick Colors------------
+    # Make increasing ohlc sticks and customize their color and name
+    opens = [datarow.open for datarow in dataRows]
+    highs = [datarow.high for datarow in dataRows]
+    lows = [datarow.low for datarow in dataRows]
+    closes = [datarow.close for datarow in dataRows]
 
+    fig_increasing = FigureFactory.create_candlestick(opens, highs, lows, closes, dates=datetime_xAxis,
+        direction='increasing',
+        marker=go.Marker(color='rgb(61, 153, 112)'),
+        line=go.Line(color='rgb(61, 153, 112)'))
+
+    # Make decreasing ohlc sticks and customize their color and name
+    fig_decreasing = FigureFactory.create_candlestick(opens, highs, lows, closes, dates=datetime_xAxis,
+        direction='decreasing',
+        marker=go.Marker(color='rgb(255, 65, 54)'),
+        line=go.Line(color='rgb(255, 65, 54)'))
+
+    # Initialize the figure
+    fig = fig_increasing
+    fig['data'].extend(fig_decreasing['data'])
+
+    # ------------Add extensions------------
+    for index, extensionList in enumerate(extensionLists):
+        addLineExtension(fig, [data[0] for data in extensionList], [data[1] for data in extensionList],
+                         extensionNames[index], extensionLineTypes[index], extensionColors[index])
+
+    # ------------Update layout And Draw the chart------------
+    filename = chartTitle
+    fig['layout'].update(
+        title=filename,
+        xaxis=dict(
+            ticktext=[datarow.date for datarow in dataRows],
+            tickvals=datetime_xAxis,
+            showticklabels=False,
+            showgrid=True,
+            showline=True
+        ),
+    )
+
+    plotly.offline.plot(fig, filename=filename + '.html', auto_open=isAutoOpen)
+    print "----------The chart has been generated----------\n"
 
 def main():
     path = os.path.dirname(os.path.abspath(__file__))
