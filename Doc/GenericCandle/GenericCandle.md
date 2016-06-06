@@ -22,7 +22,7 @@ The input must be a csv file in a certain format. For now, put the csv file and 
 
 ###Output
 For now, the output is a html file like below
-> ![](./ExampleData.png)
+> ![](./ExampleOutput.png)
 
 ###Color and line type table
 
