@@ -9,7 +9,7 @@
 ###Usage
 The input must be a csv file in a certain format. For now, put the csv file and the code in the same directory and run the code. Here is an example. **Note that user can only change the data in the yellow area**
 
-![example](./ExampleData.png =550x)
+![example](./ExampleData.png)
 
 1. Row 1 define the title of the chart. If the user do not enter anything here, the program will name the chart *'Candlestick'*
 2. Row 2 indicate the `time interval` between each candle. This data must be exactly the same as the time intervel between each candle. The program will take this time interval to generate candles. The unit must be **minute**.
@@ -23,7 +23,7 @@ The input must be a csv file in a certain format. For now, put the csv file and 
 
 ###Output
 For now, the output is a html file like below. User can use Chrome to open it. The four lines are four extensions.
-![](./ExampleOutput.png =550x)
+![](./ExampleOutput.png)
 
 ###Color and line type table
 
