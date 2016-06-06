@@ -86,7 +86,7 @@ class DataRow:
     """
     def __init__(self, row, indexOfRow):
         self.index = indexOfRow
-        self.date = (roundTime(row[0], 60) if indexOfRow != -1 else None)
+        self.date = (roundTime(row[0], 3) if indexOfRow != -1 else None)
         self.open = (row[1] if indexOfRow != -1 else None)
         self.high = (row[2] if indexOfRow != -1 else None)
         self.low = (row[3] if indexOfRow != -1 else None)
@@ -98,6 +98,10 @@ class DataRow:
     def checkData(self):
         if self.high < self.low:
             print 'The high data is smaller than low data, please check %d data' % (self.index + 1)
+            sys.exit()
+
+        if len(dataRows) and (self.date - dataRows[-1].date).seconds % timeInterval.seconds != 0:
+            print 'time interval is inconsistent, please check the data at index %d' %(self.index + 1)
             sys.exit()
 
 
