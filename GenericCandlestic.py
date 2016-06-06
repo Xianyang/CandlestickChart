@@ -23,6 +23,7 @@ timeInterval = 0            # the minimum time interval
 daysToShow = 0              # how many days the user want to show
 extensionCount = 0          # how many extension the chart has
 parameterRowNumber = 5      # how many parameter row
+
 validColorlist = ['red', 'green', 'yellow', 'blue', 'purple', 'orange', 'black']
 validLineStyleList = ['line', 'dash', 'dot']
 
@@ -128,7 +129,7 @@ def readData(filename):
         # title for the chart
         chartTitle = rowsToShow[0][0]
         if chartTitle is None or chartTitle == '':
-            raise Exception ('There is no title for the chart, please check')
+            chartTitle = 'Candlestick'
         print 'chart titile is ' + chartTitle
 
         # time interval
@@ -141,8 +142,9 @@ def readData(filename):
         # days to show
         daysToShowValue = rowsToShow[2][1]
         if daysToShowValue == '' or daysToShowValue < 0:
-            raise ValueError('Invalid days to show value, please check')
-        daysToShow = int(rowsToShow[2][1])
+            daysToShow = 0
+        else:
+            daysToShow = int(rowsToShow[2][1])
 
         # extension count
         extensionCountValue = rowsToShow[3][1]
