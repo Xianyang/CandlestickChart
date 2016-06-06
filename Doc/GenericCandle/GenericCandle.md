@@ -6,7 +6,7 @@
 2. Add line extension
 
 ###Usage
-The input must be a csv file in a certain format. For now, put the csv file and the code in the same directory and run the code. Here is an example
+The input must be a csv file in a certain format. For now, put the csv file and the code in the same directory and run the code. Here is an example. **Note that user can only change the data in the yellow area**
 
 > ![example](./ExampleData.png)
 
