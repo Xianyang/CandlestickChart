@@ -1,6 +1,6 @@
 Name of this Candlestick Chart,,,,,,,,,
-timeinterval,15,,,,,,,,
-days to show,0,,,,,,,,
+time interval(minutes),15,,,,,,,,
+days to show(0 = all),0,,,,,,,,
 extension count,4,,,,,,,,
 DATE,Open,High,Low,Close,New Date Indicator,Activation_orange_line,Limitation_blue_line,Take Profit_green_line,Stop Loss_red_line
 2016-05-31 21:15:00,6.71,6.73,6.71,6.73,1,6.64,,,
