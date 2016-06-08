@@ -1,5 +1,4 @@
 import sys
-import platform
 import copy
 from os import listdir
 from os.path import isfile, join
@@ -15,14 +14,17 @@ dataRows = []               # data list for all data
 datetime_data = []          # datetime list for candlestick
 datetime_xAxis = []         # datetime list for showing on the xAxis
 extensionLists = []         # extension list
-extensionNames = []
-extensionColors = []
-extensionLineTypes = []
+extensionNames = []         # name list for extensions
+extensionColors = []        # color list for extensions
+extensionLineTypes = []     # line type list for extensions
 chartTitle = ''             # title of this chart
 timeInterval = 0            # the minimum time interval
 daysToShow = 0              # how many days the user want to show
 extensionCount = 0          # how many extension the chart has
 parameterRowNumber = 5      # how many parameter row
+
+validColorlist = ['red', 'green', 'yellow', 'blue', 'purple', 'orange', 'black']
+validLineStyleList = ['line', 'dash', 'dot']
 
 
 def cleanTheData():
@@ -63,9 +65,11 @@ def roundTime(dt, roundTo):
     if dt is None:
         dt = datetime.datetime.now()
 
-    import types
-    if type(dt) is types.StringType:
-        dt = datetime.strptime(dt, '%m/%d/%Y %H:%M')
+    try:
+        dt = datetime.strptime(dt, '%Y-%m-%d %H:%M:%S')
+    except Exception as exc:
+        print 'can not parse datetime, please check \n', exc.message
+        sys.exit()
 
     seconds = (dt - dt.min).seconds
     # // is a floor division, not a comment on following line:
@@ -81,7 +85,7 @@ class DataRow:
     """
     def __init__(self, row, indexOfRow):
         self.index = indexOfRow
-        self.date = (roundTime(row[0], 60) if indexOfRow != -1 else None)
+        self.date = (roundTime(row[0], 3) if indexOfRow != -1 else None)
         self.open = (row[1] if indexOfRow != -1 else None)
         self.high = (row[2] if indexOfRow != -1 else None)
         self.low = (row[3] if indexOfRow != -1 else None)
@@ -95,6 +99,25 @@ class DataRow:
             print 'The high data is smaller than low data, please check %d data' % (self.index + 1)
             sys.exit()
 
+        if len(dataRows) and (self.date - dataRows[-1].date).seconds % timeInterval.seconds != 0:
+            print 'time interval is inconsistent, please check the data at index %d' % (self.index + 1)
+            sys.exit()
+
+
+def checkExtensionParameters():
+    for index, name in enumerate(extensionNames):
+        if name is '':
+            name = 'extension%d' % (index + 1)
+            extensionNames[index] = name
+
+    for index, color in enumerate(extensionColors):
+        if color not in validColorlist:
+            extensionColors[index] = ''
+
+    for index, lineType in enumerate(extensionLineTypes):
+        if lineType is '' or lineType not in validLineStyleList:
+            extensionLineTypes[index] = 'line'
+
 
 def readData(filename):
     cleanTheData()
@@ -106,18 +129,42 @@ def readData(filename):
             for row in spamreader:
                 rowsToShow.append(row)
 
+        # title for the chart
         chartTitle = rowsToShow[0][0]
+        if chartTitle is None or chartTitle == '':
+            chartTitle = 'Candlestick'
+        print 'chart titile is ' + chartTitle
+
+        # time interval
+        timeIntervalValue = rowsToShow[1][1]
+        if timeIntervalValue == '' or timeIntervalValue < 0:
+            raise ValueError('Invalid time interval, please check')
         timeInterval = timedelta(minutes=int(rowsToShow[1][1]))
-        daysToShow = int(rowsToShow[2][1])
+        print 'time interval is %d' % (timeInterval.seconds / 60)
+
+        # days to show
+        daysToShowValue = rowsToShow[2][1]
+        if daysToShowValue == '' or daysToShowValue < 0:
+            daysToShow = 0
+        else:
+            daysToShow = int(rowsToShow[2][1])
+
+        # extension count
+        extensionCountValue = rowsToShow[3][1]
+        if extensionCountValue == '' or extensionCountValue < 0:
+            raise ValueError('Invalid extension count, please check')
         extensionCount = int(rowsToShow[3][1])
-        for i in range(0, extensionCount):
+
+        # create extension list
+        for i in xrange(0, extensionCount):
             extensionLists.append([])
             extensionNames.append(rowsToShow[parameterRowNumber-1][i+6].split('_')[0])
             extensionColors.append(rowsToShow[parameterRowNumber-1][i+6].split('_')[1])
             extensionLineTypes.append(rowsToShow[parameterRowNumber-1][i+6].split('_')[2])
-        #print 'time interval is %d' %(timeInterval)
-    except ValueError:
-        print "Value error, please check the data"
+
+        checkExtensionParameters()
+    except ValueError as exc:
+        print 'Value error, ', exc.message
         sys.exit()
     except IOError as exc:
         print 'IOError: %s not found, please check file name' % filename
@@ -126,6 +173,7 @@ def readData(filename):
         print 'unexpected error: ', exc.message
         sys.exit()
 
+    # cut the data for a certain amount of days
     if daysToShow > 0:
         indexToCheck = 5
         temp = copy.deepcopy(rowsToShow)
@@ -136,7 +184,7 @@ def readData(filename):
             rowsToShow.insert(0, row)
             if row[indexToCheck] != '':
                 count -= 1
-        for i in range(0, parameterRowNumber):
+        for i in xrange(0, parameterRowNumber):
             rowsToShow.insert(0, temp[parameterRowNumber - 1 - i])
 
     for indexOfRow, row in enumerate(rowsToShow):
@@ -172,7 +220,7 @@ def readData(filename):
     datetime_data = [daterow.date for daterow in dataRows]
     datetime_xAxis = [dataRows[0].date + i * timeInterval for i in xrange(0, len(dataRows))]
 
-    # Step5 ------ Process datetime for extensions
+    # Step4 ------ Process datetime for extensions
     for extensionList in extensionLists:
         for i in xrange(0, len(extensionList)):
             if extensionList[i][1]:
@@ -270,7 +318,7 @@ def createFigure(filename, isAutoOpen = True, isUploadToServer = False):
 def main():
     path = os.path.dirname(os.path.abspath(__file__))
 
-    filenames = [path+'\\'+f for f in listdir(path) if isfile(join(path, f)) and f.endswith('.csv')]
+    filenames = [path+'/'+f for f in listdir(path) if isfile(join(path, f)) and f.endswith('.csv')]
     for filename in filenames:
         isAutoOpen = True
         isUploadToServer = False
@@ -281,4 +329,3 @@ def main():
 if __name__ == '__main__':
     print "****** Candle Stick Generator ******"
     main()
-
