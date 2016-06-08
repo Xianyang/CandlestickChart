@@ -1,5 +1,4 @@
 import sys
-import platform
 import copy
 from os import listdir
 from os.path import isfile, join
@@ -101,7 +100,7 @@ class DataRow:
             sys.exit()
 
         if len(dataRows) and (self.date - dataRows[-1].date).seconds % timeInterval.seconds != 0:
-            print 'time interval is inconsistent, please check the data at index %d' %(self.index + 1)
+            print 'time interval is inconsistent, please check the data at index %d' % (self.index + 1)
             sys.exit()
 
 
@@ -157,11 +156,12 @@ def readData(filename):
         extensionCount = int(rowsToShow[3][1])
 
         # create extension list
-        for i in range(0, extensionCount):
+        for i in xrange(0, extensionCount):
             extensionLists.append([])
             extensionNames.append(rowsToShow[parameterRowNumber-1][i+6].split('_')[0])
             extensionColors.append(rowsToShow[parameterRowNumber-1][i+6].split('_')[1])
             extensionLineTypes.append(rowsToShow[parameterRowNumber-1][i+6].split('_')[2])
+
         checkExtensionParameters()
     except ValueError as exc:
         print 'Value error, ', exc.message
@@ -220,7 +220,7 @@ def readData(filename):
     datetime_data = [daterow.date for daterow in dataRows]
     datetime_xAxis = [dataRows[0].date + i * timeInterval for i in xrange(0, len(dataRows))]
 
-    # Step5 ------ Process datetime for extensions
+    # Step4 ------ Process datetime for extensions
     for extensionList in extensionLists:
         for i in xrange(0, len(extensionList)):
             if extensionList[i][1]:
@@ -329,4 +329,3 @@ def main():
 if __name__ == '__main__':
     print "****** Candle Stick Generator ******"
     main()
-
