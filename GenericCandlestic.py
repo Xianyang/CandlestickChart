@@ -86,17 +86,17 @@ class DataRow:
     def __init__(self, row, indexOfRow):
         self.index = indexOfRow
         self.date = (roundTime(row[0], 3) if indexOfRow != -1 else None)
-        self.open = (row[1] if indexOfRow != -1 else None)
-        self.high = (row[2] if indexOfRow != -1 else None)
-        self.low = (row[3] if indexOfRow != -1 else None)
-        self.close = (row[4] if indexOfRow != -1 else None)
+        self.open = (float(row[1]) if indexOfRow != -1 else None)
+        self.high = (float(row[2]) if indexOfRow != -1 else None)
+        self.low = (float(row[3]) if indexOfRow != -1 else None)
+        self.close = (float(row[4]) if indexOfRow != -1 else None)
         self.extensionData = []
         for i in range(6, len(row)):
             self.extensionData.append(float(row[i]) if indexOfRow != -1 and row[i] != '' else None)
 
     def checkData(self):
-        if self.high < self.low:
-            print 'The high data is smaller than low data, please check %d data' % (self.index + 1)
+        if self.high < self.low or self.high < self.open or self.high < self.close:
+            print 'The high data is smaller than other data, please check %d data' % (self.index + 1)
             sys.exit()
 
         if len(dataRows) and (self.date - dataRows[-1].date).seconds % timeInterval.seconds != 0:
