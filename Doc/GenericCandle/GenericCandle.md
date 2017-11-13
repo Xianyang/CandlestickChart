@@ -2,11 +2,11 @@
 ---
 **Generic Candlestick** is a program to generate candlestick chart from a .csv file. User can add some **line extension** to the chart. The output is a html file
 
-###Function
+### Function
 1. Generate candlestick chart(html file)
 2. Add line extension
 
-###Usage
+### Usage
 The input must be a csv file in a certain format. For now, put the csv file and the code in the same directory and run the code. Here is an example. **Note that user can only change the data in the yellow area**
 
 ![example](./ExampleData.png)
@@ -21,11 +21,11 @@ The input must be a csv file in a certain format. For now, put the csv file and 
 8. **Column F is important** if user wants to show certain amount of dates. Set this column to **1** if the data entry is the first data of a business day. If user just wants to show all the data, this column can be left empty.
 9. Column G and the following are the extensions. The name of the data should be defined as `name_color_line type`. Use can choose `color` and `line type` from the table below. Each data in this column will be shown in a time interval period. In this case, that is 15 minutes. If the use does not input the name here, like ' _ _ ', the program will assign a default `name`, `color` and `line type` for this extension.
 
-###Output
+### Output
 For now, the output is a html file like below. User can use Chrome to open it. The four lines are four extensions.
 ![](./ExampleOutput.png)
 
-###Color and line type table
+### Color and line type table
 
 <table>
   <tr>
